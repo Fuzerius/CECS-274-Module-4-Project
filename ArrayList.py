@@ -17,14 +17,15 @@ class ArrayList(List):
 
     def resize(self):
         """
-        resize: Create a new array and copy the old values.
+        helper method; creates a new array that maintains the
+        array size invariant and copies the old values.
         """
-        # FIXME: Copy-paste your implementation from Module 2
+        # FIXME: Complete this method
         b = np.zeros(max(1, 2 * self.n), dtype=object)
         for i in range(self.n):
             b[i] = self.a[(self.j + i) % len(self.a)]
         self.a = b
-        self.j = 0  
+        self.j = 0 
 
     def get(self, i: int) -> object:
         """
@@ -33,10 +34,11 @@ class ArrayList(List):
         :raise IndexError: raises IndexError if i is negative or greater than or
         equal to the number of existing elements
         """
-        # FIXME: Copy-paste your implementation from Module 2
+        # FIXME: Complete this method
         if i < 0 or i >= self.n:
             raise IndexError("Index out of bounds")
         return self.a[(self.j + i) % len(self.a)]
+        
 
     def set(self, i: int, x: object) -> object:
         """
@@ -47,7 +49,7 @@ class ArrayList(List):
         equal to the number of existing elements
         :return object; returns the element that was replaced at index i
         """
-        # FIXME: Copy-paste your implementation from Module 2
+        # FIXME: Complete this method
         if i < 0 or i >= self.n:
             raise IndexError("Index out of bounds")
         y = self.a[(self.j + i) % len(self.a)]
@@ -72,7 +74,7 @@ class ArrayList(List):
         :raise IndexError: raises IndexError if i is negative or greater than or
         equal to the number of existing elements
         """
-        # FIXME: Copy-paste your implementation from Module 2
+        # FIXME: Complete this method
         if i < 0 or i > self.n:
             raise IndexError("Index out of bounds")
 
@@ -88,20 +90,10 @@ class ArrayList(List):
                 self.a[(self.j + k) % len(self.a)] = self.a[(self.j + k - 1) % len(self.a)]
 
         self.a[(self.j + i) % len(self.a)] = x
-        self.n += 1 
+        self.n += 1
 
     def remove(self, i: int) -> object:
-        """
-        removes the element at index i by shifting elements
-        left or right depending on whether the element to be removed is in
-        the first-half or the second-half of the list.
-        and returns it
-        :param i: int type; the index of the element to be removed
-        :return: Object type; the element at index i
-        :raise IndexError: raises IndexError if i is negative or greater than or
-        equal to the number of existing elements
-        """
-        # FIXME: Copy-past your implementation from Module 2
+
         if i < 0 or i >= self.n:
             raise IndexError("Index out of bounds")
 
@@ -126,6 +118,32 @@ class ArrayList(List):
             self.resize()
 
         return x
+
+    def remove(self, i: int) -> object:
+        """
+        removes the element at index i by shifting elements
+        left or right depending on whether the element to be removed is in
+        the first-half or the second-half of the array.
+        returns the removed element
+        :param i: int type; the index of the element to be removed
+        :return: Object type; the element at index i
+        :raise IndexError: raises IndexError if i is negative or greater than or
+        equal to the number of existing elements
+        """
+        # FIXME: Complete this method
+        if i < 0 or i >= self.n: raise IndexError()
+        x = self.a[(self.j + i) % len(self.a)]
+        if i < self.n / 2:
+            for k in range(i, 0, -1):
+                self.a[(self.j + k) % len(self.a)] = self.a[(self.j + k - 1) % len(self.a)]
+            self.j = (self.j + 1) % len(self.a)
+        else:
+            for k in range(i, self.n - 1):
+                self.a[(self.j + k) % len(self.a)] = self.a[(self.j + k + 1) % len(self.a)]
+        self.n -= 1
+        if len(self.a) >= 3 * self.n: self.resize()
+        return x
+
    
     def size(self) -> int:
         """
@@ -134,19 +152,11 @@ class ArrayList(List):
         """
         return self.n
 
-    def index_of(self, x):
-        """
-        returns the list index of element x if exists in the list
-        or None, otherwise.
-        :param x: object type;
-        :return: int type; the index of x in the list; None if x is not in the list
-        """
-        for i in range(self.a):
-            if self.a[i] == x:
-                return i
-        return None
-
     def __str__(self):
+        """
+        returns the contents of this ArrayList in a string
+        :return: str type;
+        """
         s = "["
         for i in range(0, self.n):
             s += "%r" % self.a[(i + self.j) % len(self.a)]
@@ -155,13 +165,21 @@ class ArrayList(List):
         return s + "]"
 
     def __iter__(self):
+        """
+        makes this ArrayList an iterable object
+        """
         self.iterator = 0
         return self
 
     def __next__(self):
+        """
+        returns the next item in the sequence when iterating over the
+        ArrayList
+        """
         if self.iterator < self.n:
             x = self.a[(self.iterator + self.j) % len(self.a)]
             self.iterator += 1
         else:
             raise StopIteration()
         return x
+
