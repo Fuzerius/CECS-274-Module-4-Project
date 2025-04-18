@@ -1,1 +1,1 @@
-# CECS-274-Module-4-Project
+# CECS-274-Projects. Go to branches for specific module projects.
