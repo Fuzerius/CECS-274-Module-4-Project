@@ -116,20 +116,6 @@ class DLList(List):
         if i < 0 or i >= self.n:
             raise IndexError
         return self._remove(self._get_node(i))
-    
-    # def remove_value(self, x):
-    #     """
-    #     Removes the first occurrence of the given value x from the list.
-    #     :param x: object type; the value to remove
-    #     :raises: ValueError if x is not found in the list
-    #     """
-    #     u = self.dummy.next
-    #     while u != self.dummy:  # Traverse the list
-    #         if u.x == x:  # Compare the value
-    #             self._remove(u)  # Use the helper method to remove the node
-    #             return x  # Return the removed value
-    #         u = u.next
-    #     raise ValueError("Value not found in list")
 
     def size(self):
         """
@@ -185,5 +171,4 @@ class DLList(List):
         else:
             raise StopIteration()
         return x
-
 

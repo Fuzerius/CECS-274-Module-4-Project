@@ -1,12 +1,8 @@
-import sys
-import traceback
-
 from Book import Book
 import ArrayList
+import DLList
 import MaxQueue
 import time
-import DLList
-import ChainedHashTable
 
 
 class BookStore:
@@ -19,18 +15,15 @@ class BookStore:
     def __init__(self):
         self.bookCatalog = None
         self.shoppingCart = MaxQueue.MaxQueue()
-        self.mapKeysToIdxs = ChainedHashTable.ChainedHashTable()
 
     """ --------- METHODS RELATED TO THE CATALOG --------- """
     def loadCatalog(self, fileName: str, ds: str):
         """
         reads the text file at the given directory and creates a list with all books.
-        Each book record contains a key, title, group, rank 
-        (number of copies sold) anda list of keys of similar books
-        :param fileName: str type; the name of the text file containing 
-        the book catalog
-        :param ds: str type; the option of list data structure to use 
-        1 - ArrayList, 2 - DLList
+        Each book record contains a key, title, group, rank (number of copies sold) and
+        a list of keys of similar books
+        :param fileName: str type; the name of the text file containing the book catalog
+        :param ds: str type; the option of list data structure to use 1 - ArrayList, 2 - DLList
         """
         try:
             if ds == '1':
@@ -46,14 +39,11 @@ class BookStore:
                     (key, title, group, rank, similar) = line.split("^")
                     s = Book(key, title, group, rank, similar)
                     self.bookCatalog.append(s)
-                    idx = self.bookCatalog.size() - 1
-                    self.mapKeysToIdxs.add(key, idx) # mapping the key to the index of the book in the catalog
                 elapsed_time = time.time() - start_time
                 print(f"Loaded {self.bookCatalog.size()} books in {elapsed_time} seconds.")
         except Exception as e:
-            print("The following unexpected error occurred:")
-            traceback.print_exc(limit=2, file=sys.stdout)
- 
+            print("Encountered the following unexpected error while loading the catalog:\n", e)
+
     def addToCatalog(self, i, book : Book):
         """
         inserts a new book to the catalog at the given index
@@ -66,7 +56,6 @@ class BookStore:
             start_time = time.time()
 
           
-            # FIXME: Copy-paste your implementation from Module 2
             self.bookCatalog.add(i, book)
           
           
@@ -143,7 +132,6 @@ class BookStore:
             start_time = time.time()
 
           
-            # FIXME: Copy-paste your implementation from Module 2
             for i in range(n):
                 book = self.bookCatalog.get(i)
                 if infix.lower() in book.title.lower():
@@ -171,9 +159,9 @@ class BookStore:
           start_time = time.time()
 
         
-          # FIXME: Copy-paste your implementation from Module 3
+          # FIXME: Assign to idx the index of the book with the given title
           idx = self.bookCatalog.index_of(title)
-
+          "FIXME: Replace this string with the correct code / done"
         
           elapsed_time = time.time() - start_time
           if idx is None:
@@ -186,33 +174,7 @@ class BookStore:
           print("\nCHECK: Did you load the catalog?")
       except Exception as e:
           print("The following unexpected error occurred:\n", e)
-
-    def searchByKey(self, key): #FIXME
-      """
-      displays the book with the given key if it exists
-      :param key: str type; the key of the book to search for
-      """
-      try:
-          start_time = time.time()
-        
-          # FIXME: 'idx' should be the index of the book with the given key
-          #       HINT: Use the mapKeysToIdxs data structure
-          idx = self.mapKeysToIdxs.find(key)
-
-          elapsed_time = time.time() - start_time
-          if idx is None:
-              print(f"\nThere is no book with key \"{key}\" in the catalog.")
-          else:
-              print(
-                  f"\nThe following book matching the given key was found at catalog index {idx}:{self.bookCatalog.get(idx)}")
-          print(f"Action completed in {elapsed_time} seconds.")
-      except AttributeError as e:
-          print("The following unexpected error occurred:\n", e)
-          print("\nCHECK: Did you load the catalog?")
-      except Exception as e:
-          print("The following unexpected error occurred:")
-          traceback.print_exc(limit=2, file=sys.stdout)
-        
+  
     """ --------- METHODS RELATED TO THE SHOPPING CART --------- """
     def addBookByIndex(self, i: int):
         """
@@ -268,6 +230,7 @@ class BookStore:
 
           # FIXME: Assign to bestseller the Book object with the highest rank in the shopping cart
           bestseller = self.shoppingCart.max()
+          "FIXME: Replace this string with the code that will assign to bestseller the Book object with the highest rank in the shopping cart"
         
           elapsed_time = time.time() - start_time
           print("All books in shopping cart:")
